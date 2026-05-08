@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var appData = AppData()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        MoviesScreen(viewModel: MoviesViewModel())
+            .environmentObject(appData)
+            .task {
+                await loadGenre()
+            }
+    }
+    
+    func loadGenre() async {
+        do {
+            let helper = APIHelper()
+            let response : GenreList.response = try await helper.fetchRequests(request:GenreList())
+            print(response)
+            await MainActor.run {
+                self.appData.genre = response
+            }
+        } catch {
+            print("Failed to get movies \(error.localizedDescription)")
         }
-        .padding()
     }
 }
 
