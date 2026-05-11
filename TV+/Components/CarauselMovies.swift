@@ -19,14 +19,16 @@ struct CarauselMovies: View {
     var body: some View {
             TabView(selection: $currentIndex) {
                 ForEach((movies?.results ?? []).enumerated(), id: \.offset) { index, movie in
-                    BannerCard(movieDetails: movie)
-                        .frame(height: geo.size.height * 2.6/3)
-                        .tag(index)
+                    NavigationLink(value: movie) {
+                        BannerCard(movieDetails: movie)
+                            .frame(height: geo.size.height * 2.6/3)
+                            .tag(index)
+                    }
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .frame(height: geo.size.height * 2.6/3, alignment: .top)
-        .background(Color.red)
+        .background(Color.black)
         .onReceive(timer) { _ in
             let count = movies?.results.count ?? 0
             guard count > 0 else { return }

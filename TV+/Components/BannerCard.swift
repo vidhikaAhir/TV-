@@ -11,10 +11,10 @@ struct BannerCard : View {
     
     @EnvironmentObject var appData: AppData
 
-    var movieDetails: Result
+    var movieDetails: MovieResult
 
     var loadImages : LoadImages {
-        LoadImages(url: movieDetails.posterPath)
+        LoadImages(url: movieDetails.posterPath ?? "")
             
     }
         
@@ -23,7 +23,7 @@ struct BannerCard : View {
             CachedImageView(request: loadImages, contentMode: .fill)
             LinearGradient(colors: [.clear, .black.opacity(0.8)], startPoint: .center, endPoint: .bottom)
             VStack {
-                Text(movieDetails.originalTitle)
+                Text(movieDetails.originalTitle ?? "")
                     .font(.system(size: 35, weight: .bold))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.7)
@@ -31,7 +31,7 @@ struct BannerCard : View {
                     .lineLimit(2)
                     .padding(.horizontal, 16)
                 Text(getGenre())
-                    .font(.system(size: 20, weight: .medium))
+                    .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.7)
                     .shadow(color: .black.opacity(0.8), radius: 6)
@@ -48,7 +48,7 @@ struct BannerCard : View {
         
         guard let genre else { return ""}
         let filtered = genre
-            .filter {genreIDS.contains($0.id)}
+            .filter {(genreIDS ?? []).contains($0.id)}
             .map{$0.name}
         
         return filtered.prefix(4).joined(separator: "•")

@@ -7,8 +7,8 @@ import Foundation
 
 // MARK: - Movie
 struct Movie: Codable {
-    let results: [Result]
-    let totalPages, totalResults, page: Int
+    var results: [MovieResult]
+    let totalPages, totalResults, page: Int?
 
     enum CodingKeys: String, CodingKey {
         case results
@@ -19,17 +19,18 @@ struct Movie: Codable {
 }
 
 // MARK: - Result
-struct Result: Codable, Identifiable {
-    let genreIDS: [Int]
-    let adult: Bool
-    let backdropPath: String
-    let id: Int
-    let originalTitle: String
-    let voteAverage, popularity: Double
-    let posterPath, title, overview, originalLanguage: String
-    let voteCount: Int
-    let releaseDate: String
-    let softcore, video: Bool
+struct MovieResult: Codable, Identifiable, Hashable {
+    let genreIDS: [Int]?
+    let adult: Bool?
+    let backdropPath: String?
+    let id: Int?
+    let originalTitle: String?
+    let voteAverage, popularity: Double?
+    var posterPath, title, overview, originalLanguage: String?
+    let voteCount: Int?
+    let releaseDate, name: String?
+    let softcore, video: Bool?
+    var isBookmarked: Bool?
 
     enum CodingKeys: String, CodingKey {
         case genreIDS = "genre_ids"
@@ -40,10 +41,10 @@ struct Result: Codable, Identifiable {
         case voteAverage = "vote_average"
         case popularity
         case posterPath = "poster_path"
-        case title, overview
+        case title, overview, name
         case originalLanguage = "original_language"
         case voteCount = "vote_count"
         case releaseDate = "release_date"
-        case softcore, video
+        case softcore, video, isBookmarked
     }
 }

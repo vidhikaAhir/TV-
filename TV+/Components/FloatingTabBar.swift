@@ -7,57 +7,28 @@
 
 import SwiftUI
 
-struct FloatingTabBar: View {
-    
-    @Binding var selectedTab: TopTab
-    
+struct FloatingBottomBar: View {
+    @Binding var selectedTab: Tab
     var body: some View {
-        HStack(spacing: 8) {
-            ForEach(TopTab.allCases, id: \.self) { tab in
-                Text(tab.title)
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(selectedTab == tab ? .white : .black)
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        selectedTab == tab
-                        ? Color.black
-                        : Color.clear
-                    )
-                    .clipShape(Capsule())
-                    .onTapGesture {
-                        withAnimation(.easeInOut) {
-                            selectedTab = tab
-                        }
-                    }
+        HStack {
+            tabItem(icon: "house.fill", tab: .home)
+            tabItem(icon: "magnifyingglass", tab: .search)
+            tabItem(icon: "bookmark.fill", tab: .watchList)
+        }.padding(.vertical, 14)
+            .padding(.horizontal, 10)
+            .background(.ultraThinMaterial)
+            .clipShape(Capsule())
+            .shadow(color: .black.opacity(0.2),radius: 10, y:5)
+    }
+    
+    func tabItem(icon:String, tab:Tab) -> some View {
+        Image(systemName: icon)
+            .font(.system(size: 30, weight: .semibold))
+            .foregroundColor(selectedTab == tab ? .white : .gray.opacity(0.4))
+            .onTapGesture {
+                withAnimation(.easeInOut) {
+                    selectedTab = tab
+                }
             }
-        }
-        .padding(6)
-        .background(
-            Capsule()
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.1), radius: 8, y: 4)
-        )
     }
 }
-
-struct ListView: View {
-    
-    let selectedTab: TopTab
-    
-    var body: some View {
-        switch selectedTab {
-        case .first:
-            List(0..<20) { i in Text("First List \(i)") }
-            
-        case .second:
-            List(0..<20) { i in Text("Second List \(i)") }
-            
-        case .third:
-            List(0..<20) { i in Text("Third List \(i)") }
-        }
-    }
-}
-//#Preview {
-//    FloatingTabBar(selectedTab: <#Binding<TopTab>#>)
-//}

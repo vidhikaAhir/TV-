@@ -12,7 +12,7 @@ struct ContentView: View {
     @StateObject private var appData = AppData()
     
     var body: some View {
-        MoviesScreen(viewModel: MoviesViewModel())
+        HomeScreen()
             .environmentObject(appData)
             .task {
                 await loadGenre()

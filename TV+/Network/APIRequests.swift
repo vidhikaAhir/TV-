@@ -9,26 +9,69 @@ import Foundation
 
 class PopularMoviesList : APIRequestHelper {
     typealias response = Movie
-    var url : String { "movie/popular" }
+    var url : String 
     var body: Data? { nil }
+    init(url: String) {
+        let encoded =
+        url.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ) ?? "1"
+        
+
+        self.url = "movie/popular?page=\(encoded)"
+    }
+
 }
 
 class TrendingMoviesList : APIRequestHelper {
     typealias response = Movie
-    var url : String { "trending/all/day" }
+    var url : String
     var body: Data? { nil }
+    
+    init(url: String) {
+        let encoded =
+        url.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ) ?? "1"
+        
+
+        self.url = "trending/all/day?page=\(encoded)"
+    }
+
 }
 
 class TopMoviesList : APIRequestHelper {
     typealias response = Movie
-    var url : String { "movie/top_rated" }
+    var url : String
     var body: Data? { nil }
+    
+    init(url: String) {
+        let encoded =
+        url.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ) ?? "1"
+        
+
+        self.url = "movie/top_rated?page=\(encoded)"
+    }
+
 }
 
 class TopShowsList : APIRequestHelper {
     typealias response = Movie
-    var url : String { "tv/popular" }
+    var url : String
     var body: Data? { nil }
+    
+    init(url: String) {
+        let encoded =
+        url.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ) ?? "1"
+        
+
+        self.url = "tv/popular?page=\(encoded)"
+    }
+
 }
 
 class UpcomingMoviesList : APIRequestHelper {
@@ -41,6 +84,23 @@ class GenreList : APIRequestHelper {
     typealias response = Genre
     var url : String { "genre/movie/list" }
     var body: Data? { nil }
+}
+
+class SearchMulti: APIRequestHelper {
+    typealias response = Movie
+    var url: String
+    var body: Data? { nil }
+    
+    init(url: String) {
+        let encoded =
+        url.addingPercentEncoding(
+                withAllowedCharacters: .urlQueryAllowed
+            ) ?? ""
+        
+
+        self.url = "search/multi?query=\(encoded)"
+    }
+
 }
 
 class LoadImages : APIRequestHelper {

@@ -7,7 +7,11 @@
 
 import Foundation
 
-class APIHelper {
+protocol APIClient {
+    func fetchRequests<T: APIRequestHelper>(request: T) async throws -> T.response
+}
+
+class APIHelper: APIClient {
     
     func fetchRequests<T: APIRequestHelper>(request: T) async throws -> T.response {
         guard let url = URL(string: request.baseUrl + request.url) else {
@@ -32,7 +36,7 @@ class APIHelper {
             let prettyData = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted])
             
             if let prettyString = String(data: prettyData, encoding: .utf8) {
-//                print(prettyString)
+                print(prettyString)
             }
         } catch {
             throw error

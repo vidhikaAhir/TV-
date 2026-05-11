@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TV_App: App {
@@ -13,5 +14,6 @@ struct TV_App: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: MovieResultEntity.self)
     }
 }
