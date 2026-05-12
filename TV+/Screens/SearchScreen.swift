@@ -91,10 +91,13 @@ struct SearchBar: View {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
             
-            TextField(
-                "Search movies, shows...",
-                text: $text
+            TextField("",
+                text: $text,
+                prompt: Text("Search movies, shows...")
+                    .foregroundColor(.white.opacity(0.6))
+
             )
+            .tint(.white)
             .foregroundColor(.white)
             
             if !text.isEmpty {
